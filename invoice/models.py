@@ -1,4 +1,7 @@
 from django.db import models
+from django.template.defaultfilters import slugify
+from django.utils import timezone
+from uuid import uuid4
 
 # Create your models here.
 class Client(models.Model):
@@ -14,7 +17,7 @@ class Client(models.Model):
 
 
     def __str__(self):
-        return ''
+        return '{} {} {}' . format(self.clientName,self.uniqueId,self.email)
     
     def get_absolute_url(self):
         return reverse ('client-detail', kwargs={'slug':self.slug})
@@ -24,9 +27,9 @@ class Client(models.Model):
             self.date_created = timezone.localtime(timezone.now())
         if self.uniqueId is None:
             self.uniqueId = str(uuid4()).split('-')[4]
-            self.slug = slugify('')
+            self.slug = slugify('{} {} {}' . format(self.clientName,self.uniqueId,self.email))
 
-        self.slug = slugify('')
+        self.slug = slugify('{} {} {}' . format(self.clientName,self.uniqueId,self.email))
         self.last_updated = timezone.localtime(timezone.now())
 
         super(Client, self).save(*args, **kwargs)
