@@ -1,3 +1,4 @@
+from distutils.command.upload import upload
 from django.db import models
 from django.template.defaultfilters import slugify
 from django.utils import timezone
@@ -8,7 +9,7 @@ class Client(models.Model):
     clientName = models.CharField(null=True,blank=True,max_length=200)
     phone_number    = models.CharField(max_length=50,unique=True,null=True)
     email = models.EmailField(max_length=100, unique=True,null=True)
-
+    logo = models.ImageField(blank=True,upload_to = 'brandname')
     # Utility fields
     uniqueId = models.CharField(null=True, blank=True, max_length=100)
     slug = models.SlugField(max_length=500, unique=True, blank=True, null=True)
