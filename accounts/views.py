@@ -65,50 +65,6 @@ def login(request):
         user = auth.authenticate(email=email, password=password)
 
         if user is not None:
-
-            try:
-                cart = Cart.objects.get(cart_id= _cart_id(request))
-                is_cart_item_exists = CartItem.objects.filter(cart=cart).exists()
-                if is_cart_item_exists:
-                    cart_item = CartItem.objects.filter(cart=cart)
-
-                    # getting product variation by cart item
-                    product_variation = []
-                    for item in cart_item:
-                        variation = item.variations.all()
-                        product_variation.append(list(variation))
-
-                    # Get the cart items from user to access his product variation
-                    cart_item = CartItem.objects.filter(user=user)
-                    ex_var_list = []
-                    id  = []
-                    for item in cart_item:
-                        existing_variation = item.variations.all()
-                        ex_var_list.append(list(existing_variation))
-                        id.append(item.id)
-
-                    
-                    # product_variation = [1,2,3,4,6]
-                    # ex_var_list= [4,6,3,5] 
-                    # 
-                    for pr in product_variation:
-                        if pr in ex_var_list:
-                            index = ex_var_list.index(pr)
-                            item_id = id[index]
-                            item = CartItem.objects.get(id=item_id)
-                            item.quantity += 1
-                            item.user = user
-                            item.save()
-                        else:
-                            cart_item = CartItem.objects.filter(cart=cart)
-
-                            for item in cart_item:
-                                item.user = user
-                                item.save()
-            except:
-                pass
-
-
             auth.login(request, user)  
             messages.success(request,'You are now logged in.')
             url = request.META.get('HTTP_REFERER')
@@ -158,11 +114,11 @@ def activate(request,uidb64, token):
 def dashboard(request):
     userprofile = UserProfile.objects.get(user_id=request.user.id)
     # userprofile = get_object_or_404(UserProfile, user=request.user)
-    orders = Order.objects.order_by('-created_at').filter(user_id=request.user.id, is_ordered = True)
-    orders_count = orders.count()
+    # orders = Order.objects.order_by('-created_at').filter(user_id=request.user.id, is_ordered = True)
+    # orders_count = orders.count()
    
     context = {
-        'orders_count':orders_count,
+        # 'orders_count':orders_count,
         'userprofile' : userprofile,
     }
     return render (request, 'accounts/dashboard.html',context)
@@ -229,13 +185,14 @@ def resetPassword(request):
     else:
         return render(request,'accounts/resetPassword.html')
 
-@login_required(login_url='login')
-def my_orders(request):
-    orders = Order.objects.filter(user=request.user,is_ordered=True).order_by('-created_at')
-    context = {
-        'orders':orders,
-    }
-    return render (request,'accounts/my_orders.html',context)
+# @login_required(login_url='login')
+# my invoices
+# def my_orders(request):
+#     orders = Order.objects.filter(user=request.user,is_ordered=True).order_by('-created_at')
+#     context = {
+#         'orders':orders,
+#     }
+#     return render (request,'accounts/my_orders.html',context)
 
 @login_required(login_url='login')
 def edit_profile(request):
@@ -285,16 +242,17 @@ def change_password(request):
             return redirect ('change_password')
     return render(request,'accounts/change_password.html')
 
-@login_required(login_url='login')
-def order_detail(request, order_id):
-    order_detail = OrderProduct.objects.filter(order__order_number = order_id)
-    order = Order.objects.get(order_number = order_id)
-    subtotal = 0
-    for i in order_detail:
-        subtotal += i.product_price * i.quantity
-    context = {
-        'order_detail' : order_detail,
-        'order'         : order,
-        'subtotal'      : subtotal,
-    }
-    return render(request,'accounts/order_detail.html',context)
+# @login_required(login_url='login')
+# # invoice detail
+# def order_detail(request, order_id):
+#     order_detail = OrderProduct.objects.filter(order__order_number = order_id)
+#     order = Order.objects.get(order_number = order_id)
+#     subtotal = 0
+#     for i in order_detail:
+#         subtotal += i.product_price * i.quantity
+#     context = {
+#         'order_detail' : order_detail,
+#         'order'         : order,
+#         'subtotal'      : subtotal,
+#     }
+#     return render(request,'accounts/order_detail.html',context)
