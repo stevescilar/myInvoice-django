@@ -1,5 +1,7 @@
 from django.contrib import admin
-from . models import Client,Product
+
+from invoice.utils import invoice_no
+from . models import Client,Product,Invoice
 
 
 class ClientAdmin(admin.ModelAdmin):
@@ -10,3 +12,4 @@ class ProductAdmin(admin.ModelAdmin):
 
 admin.site.register(Client,ClientAdmin)
 admin.site.register(Product,ProductAdmin)
+admin.site.register(Invoice)
