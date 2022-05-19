@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'base_wn.html' %}
 {% load static %}
 
 {% block content %}
@@ -17,11 +17,23 @@
     </div>
 
     {% else  %}
+
+
+    
         <div class="card mx-auto" style="max-width: 380px; margin-top:100px;">
-             
+            <div class="card-header">
+                <div class="text-center">
+                    <!-- <span class="iconify" data-icon="ri:login-circle-fill" style="color: orange;" data-width="50"></span> -->
+                    <span class="db"><img src="{% static 'images/techit-new.png' %}" alt="logo"  width="55"/></span> &nbsp; &nbsp;
+                    <span><img class="logo" src="{% static 'images/textlogo.png' %}" width="120" ></span>
+                </div>
+              </div>
           <div class="card-body">
+            
            
-          <h4 class="card-title mb-4">Sign in</h4>
+          <h4 class="card-title mb-4" style="text-align: center ;"> Hi! Welcome </h4>
+          <p style="text-align:center;">Please Login or Create an account with us to create your invoice.</p>
+
           {% include 'includes/alerts.html' %}
           <form action="{% url 'login' %}" method="POST">
               {% csrf_token %}

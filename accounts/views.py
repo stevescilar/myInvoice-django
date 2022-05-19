@@ -58,6 +58,7 @@ def register(request):
     return render(request, 'accounts/register.html',context)
 
 def login(request):
+    page = 'login'
     if request.method == 'POST':
         email = request.POST['email']
         password = request.POST['password']
@@ -84,7 +85,11 @@ def login(request):
             messages.error(request,'invalid login credentials')
             return redirect ('login')
 
-    return render(request, 'accounts/login.html')
+    context = {
+        'page':page
+    }
+
+    return render(request, 'accounts/login.html',context)
 
 @login_required(login_url = 'login')
 def logout(request):
@@ -112,16 +117,17 @@ def activate(request,uidb64, token):
 
 @login_required(login_url = 'login')
 def dashboard(request):
-    userprofile = UserProfile.objects.get(user_id=request.user.id)
+    # userprofile = UserProfile.objects.get(user_id=request.user.id)
     # userprofile = get_object_or_404(UserProfile, user=request.user)
     # orders = Order.objects.order_by('-created_at').filter(user_id=request.user.id, is_ordered = True)
     # orders_count = orders.count()
    
-    context = {
-        # 'orders_count':orders_count,
-        'userprofile' : userprofile,
-    }
-    return render (request, 'accounts/dashboard.html',context)
+    # context = {
+    #     # 'orders_count':orders_count,
+    #     'userprofile' : userprofile,
+    # }
+    return render (request, 'accounts/dashboard.html')
+    # return render (request, 'accounts/dashboard.html',context)
 
 def forgotPassword(request):
     if request.method =='POST':
