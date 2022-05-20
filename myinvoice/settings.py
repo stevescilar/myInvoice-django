@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'invoice',
     'accounts',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -74,7 +75,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'myinvoice.wsgi.application'
 
 AUTH_USER_MODEL = 'accounts.Account'
-
+CRISPY_TEMPLATE_PACK = 'uni_form'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
