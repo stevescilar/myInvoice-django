@@ -7,7 +7,7 @@ from math import prod
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
-from accounts.forms import RegistrationForm,UserForm,UserProfileForm
+from accounts.forms import RegistrationForm,UserForm,UserProfileForm,UserLoginForm
 from .models import Account, UserProfile
 from django.contrib import messages , auth
  
@@ -58,8 +58,13 @@ def register(request):
     return render(request, 'accounts/register.html',context)
 
 def login(request):
-    page = 'login'
+    context = {}
+    if request.method == 'GET':
+        form = UserLoginForm()
+        context['form'] = form
+        return render(request, 'accounts/login.html', context)
     if request.method == 'POST':
+        form = UserLoginForm(request.POST)
         email = request.POST['email']
         password = request.POST['password']
 
@@ -84,10 +89,6 @@ def login(request):
         else:
             messages.error(request,'invalid login credentials')
             return redirect ('login')
-
-    context = {
-        'page':page
-    }
 
     return render(request, 'accounts/login.html',context)
 
@@ -202,7 +203,7 @@ def resetPassword(request):
 
 @login_required(login_url='login')
 def edit_profile(request):
-    
+    userprofile = get_object_or_404(UserProfile, id=request.user.id)
     if request.method == 'POST':
         user_form = UserForm(request.POST, instance=request.user)
         # profile_form = UserProfileForm(request.POST, request.FILES, instance=userprofile)
@@ -217,7 +218,7 @@ def edit_profile(request):
         user_form  = UserForm(instance=request.user)
         # profile_form = UserProfileForm(instance=userprofile)
         profile_form = UserProfileForm(instance=request.user)
-    userprofile = get_object_or_404(UserProfile, id=request.user.id)
+        
     # userprofile = UserProfile.objects.all()  
     context = {
         'user_form' :   user_form,

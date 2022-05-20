@@ -12,7 +12,7 @@ class UserLoginForm(forms.ModelForm):
     class Meta:
         model = User
         fields = [
-            'username','password'
+            'email','password'
         ]
 
 class ClientForm(forms.ModelForm):
