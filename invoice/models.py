@@ -11,6 +11,7 @@ from .utils import invoice_no
 class Client(models.Model):
     clientName = models.CharField(null=True,blank=True,max_length=200)
     phone_number    = models.CharField(max_length=50,unique=True,null=True)
+    company_name = models.CharField(max_length=100,null=True, blank=True)
     email = models.EmailField(max_length=100, unique=True,null=True)
     logo = models.ImageField(blank=True,upload_to = 'brandname')
     # Utility fields

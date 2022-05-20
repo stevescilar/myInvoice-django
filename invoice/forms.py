@@ -16,12 +16,21 @@ class UserLoginForm(forms.ModelForm):
         ]
 
 class ClientForm(forms.ModelForm):
+    logo = forms.ImageField(required=False, error_messages={'invalid':("image files only")}, widget=forms.FileInput)
     class Meta:
         model = Client
         fields = [
-            'clientName','logo','phone_number','email'
+            'clientName','logo','phone_number','email','company_name'
         ]
 
+    def __init__(self, *args, **kwargs):
+        super(ClientForm, self).__init__(*args, **kwargs)
+        self.fields['clientName'].widget.attrs['placeholder'] = 'Enter client Names'
+        self.fields['email'].widget.attrs['placeholder'] = 'Enter client Email Address'
+        self.fields['phone_number'].widget.attrs['placeholder'] = 'Enter client Phone Number'
+        self.fields['company_name'].widget.attrs['placeholder'] = 'Enter client company name'
+        for field in self.fields:
+            self.fields[field].widget.attrs['class'] = 'form-control'
 class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
