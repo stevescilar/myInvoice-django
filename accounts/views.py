@@ -84,7 +84,7 @@ def login(request):
                     
                 
             except:
-                return redirect ('dashboard')
+                return redirect ('home')
             
         else:
             messages.error(request,'invalid login credentials')
