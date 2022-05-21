@@ -3,6 +3,7 @@ from email import message_from_binary_file
 from email.errors import MessageError
 from email.message import EmailMessage
 from http.client import REQUEST_ENTITY_TOO_LARGE
+from django.contrib.auth import authenticate,login,logout
 from math import prod
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
@@ -10,7 +11,7 @@ from django.contrib.auth.decorators import login_required
 from accounts.forms import RegistrationForm,UserForm,UserProfileForm,UserLoginForm
 from .models import Account, UserProfile
 from django.contrib import messages , auth
- 
+from django.contrib.auth.models import User
 
 # verification email
 from django.contrib.sites.shortcuts import get_current_site
@@ -56,6 +57,7 @@ def register(request):
         'form'  :   form
     }
     return render(request, 'accounts/register.html',context)
+# 
 
 def login(request):
     context = {}
@@ -92,12 +94,14 @@ def login(request):
 
     return render(request, 'accounts/login.html',context)
 
-@login_required(login_url = 'login')
+
 def logout(request):
     auth.logout(request)
     messages.success(request,'You have been logged out.')
     return redirect('login')
-
+def logoutUser(request):
+    logout(request)
+    return redirect('login')
 # email activations
 def activate(request,uidb64, token):
     try:
