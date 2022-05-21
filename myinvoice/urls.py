@@ -25,5 +25,6 @@ urlpatterns = [
     path('',views.home, name='home'),
     path('accounts/', include('accounts.urls')),
     path('invoice/',include('invoice.urls')),
+    path('foundation/',views.base, name='base'),
     # path('accounts/', include('accounts.urls')),
 ]+ static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

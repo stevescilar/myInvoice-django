@@ -1,3 +1,4 @@
+from itertools import count
 from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -6,11 +7,22 @@ from .forms import *
 from .models import *
 # Create your views here.
 def index(request):
+    clients = Client.objects.all()
+    count = Client.objects.all()
     context={
-
+        'clients':clients,
+        'count' :count
     }
     return render(request,'invoice/index.html',context)
 
+def base(request):
+    clients = Client.objects.all()
+    count = Client.objects.all()
+    context={
+        'clients':clients,
+        'count' :count
+    }
+    return render(request,'base.html',context)
 def create_invoice(request):
     context={
 
