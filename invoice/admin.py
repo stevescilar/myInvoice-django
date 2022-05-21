@@ -5,7 +5,7 @@ from . models import Client,Product,Invoice,Setting
 
 
 class ClientAdmin(admin.ModelAdmin):
-    list_display = ('clientName','phone_number','email','uniqueId','slug','date_created','last_updated')
+    list_display = ('clientName','phone_number','email','uniqueId','slug','date_created','last_updated','logo')
 
 class ProductAdmin(admin.ModelAdmin):
     list_display = ('name','quantity','unit_price','description','slug','date_created','last_updated')
