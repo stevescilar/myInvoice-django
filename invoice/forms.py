@@ -22,7 +22,7 @@ class ClientForm(forms.ModelForm):
         fields = [
             'clientName','logo','phone_number','email','company_name'
         ]
-
+# class="input-group input-group-outline my-3"
     def __init__(self, *args, **kwargs):
         super(ClientForm, self).__init__(*args, **kwargs)
         self.fields['clientName'].widget.attrs['placeholder'] = 'Enter client Names'

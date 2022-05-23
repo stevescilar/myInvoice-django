@@ -9,7 +9,8 @@
         <div class="card my-4">
           <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
             <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
-              <h6 class="text-white text-capitalize ps-3">My Customers</h6>
+              <h6 class="text-white text-capitalize ps-3">My Customers | <a href="{% url 'create_client' %}" class="text-white text-capitalize ps-3">Create New Customer</a></h6>
+              
             </div>
           </div>
           <div class="card-body px-0 pb-2">
@@ -17,6 +18,7 @@
               <table class="table align-items-center mb-0">
                 <thead>
                   <tr>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">#</th>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Company</th>
                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Contact</th>
@@ -28,10 +30,13 @@
                 <tbody>
                   <tr>
                     <td>
-                      <div class="d-flex px-2 py-1">
-                        <div>
-                          <img src="{{client.logo.url}}" class="avatar avatar-sm me-3 border-radius-lg" alt="user1">
-                        </div>
+                        <div class="d-flex px-2 py-1">
+                            <div>
+                                <h6 class="mb-0 text-sm">{{client.id}}</h6> 
+                              <!-- <img src="{{client.logo.url}}" class="avatar avatar-sm me-3 border-radius-lg" alt="user1"> -->
+                            </div>
+                    </td>
+                    <td>          
                         <div class="d-flex flex-column justify-content-center">
                           <h6 class="mb-0 text-sm">{{client.clientName}}</h6>
                           <p class="text-xs text-secondary mb-0">{{client.email}}</p>
@@ -46,7 +51,7 @@
                         <span class="text-secondary text-xs font-weight-bold">{{client.phone_number}}</span>
                     </td>
                     <td class="align-middle text-center">
-                      <span class="text-secondary text-xs font-weight-bold">{{client.date_created|timesince}}</span>
+                      <span class="text-secondary text-xs font-weight-bold">{{client.date_created|timesince}} ago</span>
                     </td>
                     <td class="align-middle">
                       <!-- <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
