@@ -32,13 +32,20 @@ def create_invoice(request):
 
 @login_required
 def invoices(request):
-    context = {}
+    
+    invoices = Invoice.objects.all()
+    context = {
+        'invoices':invoices
+    }
     return render(request, 'invoice/invoices.html', context)
 
 
 @login_required
 def products(request):
-    context = {}
+    context = {
+        'products':products
+    }
+    products = Product.objects.all()
     return render(request, 'invoice/products.html', context)
 
 def createClient(request):
