@@ -35,7 +35,7 @@ class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
         fields = [
-            'name','quantity','description','unit_price'
+            'name','quantity','description','unit_price','invoices'
         ]
 
 class InvoiceForm(forms.ModelForm):
